@@ -4,7 +4,7 @@
 
     <groupId>io.github.NavjotSRakhra</groupId>
     <artifactId>NeuralNetwork</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0.0</version>
     <packaging>jar</packaging>
 
     <name>NeuralNetwork</name>
@@ -34,6 +34,11 @@
             <artifactId>jmh-generator-annprocess</artifactId>
             <version>1.36</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.github.NavjotSRakhra</groupId>
+            <artifactId>ProgressPrinter</artifactId>
+            <version>1.0.0</version>
         </dependency>
     </dependencies>
     <build>

@@ -30,4 +30,10 @@ public class MatrixTest extends TestCase {
         }
 
     }
+
+    public void testMultiply() {
+        Matrix a = new Matrix(4, 2, true);
+        Matrix b = new Matrix(2, 1, true);
+        System.out.println(Matrix.multiply(a, b));
+    }
 }
