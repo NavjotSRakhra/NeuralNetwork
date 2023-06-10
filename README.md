@@ -15,5 +15,5 @@ execute `mvn clean install` in `.\NeuralNetwork\`.
 
 ## UML
 
-<img height="871.1538461419" src="D:\Java Projects\NeuralNetwork\resources\UML.png" width="825"/>
+<img height="2114" src=".\resources\UML.png" width="2002"/>
 
