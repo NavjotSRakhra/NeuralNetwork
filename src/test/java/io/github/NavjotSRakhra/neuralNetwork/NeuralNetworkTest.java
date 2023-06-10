@@ -24,7 +24,8 @@ public class NeuralNetworkTest extends TestCase {
     }
 
     public void testTrain() {
-        NeuralNetwork neuralNetwork = new NeuralNetwork(2, 2, 28, 14, 7, 3);
+        NeuralNetwork neuralNetwork = new NeuralNetwork(2, 2, 4);
+        neuralNetwork.isOutputSoftmax(true);
         ProgressPrinter progressPrinter = new ProgressPrinter();
         double[][][] data = {{{1, 1}, {1, 0}}, {{0, 0}, {1, 0}}, {{1, 0}, {0, 1}}, {{0, 1}, {0, 1}}};
 

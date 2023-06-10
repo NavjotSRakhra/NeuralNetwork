@@ -1,19 +1,26 @@
 package io.github.NavjotSRakhra.neuralNetwork;
 
 import io.github.NavjotSRakhra.matrix.Matrix;
+import io.github.NavjotSRakhra.neuralNetwork.activation.Activation;
+import io.github.NavjotSRakhra.neuralNetwork.activation.TanH;
 
 import java.io.*;
+import java.util.Arrays;
 
 public class NeuralNetwork implements Serializable {
     private final int inputSize, outputSize, hiddenLayersSize[];
-    private final Matrix layers[], biases[];
+    private final Matrix[] layers, biases;
+    private final Activation activation;
     private double learningRate;
+    private boolean softmax;
 
-    public NeuralNetwork(int inputSize, int outputSize, int... hiddenLayersSize) {
+    public NeuralNetwork(Activation activationFunction, int inputSize, int outputSize, int... hiddenLayersSize) {
         this.learningRate = 0.1d;
         this.inputSize = inputSize;
         this.outputSize = outputSize;
         this.hiddenLayersSize = new int[hiddenLayersSize.length];
+        this.softmax = true;
+        this.activation = activationFunction;
         System.arraycopy(hiddenLayersSize, 0, this.hiddenLayersSize, 0, hiddenLayersSize.length);
 
         layers = new Matrix[hiddenLayersSize.length + 1];
@@ -21,7 +28,7 @@ public class NeuralNetwork implements Serializable {
 
         //Add Input to first hidden layer OR Input to Output layer matrix
         layers[0] = new Matrix(hiddenLayersSize.length > 0 ? hiddenLayersSize[0] : outputSize, inputSize, true);
-        biases[0] = new Matrix(hiddenLayersSize.length > 0 ? hiddenLayersSize[0] : outputSize, 1, true);
+        biases[0] = new Matrix(hiddenLayersSize.length > 0 ? hiddenLayersSize[0] : outputSize, 1, false);
 
         //Initializing hidden layers and output layer
         for (int i = 0; i < hiddenLayersSize.length; i++) {
@@ -31,26 +38,17 @@ public class NeuralNetwork implements Serializable {
             if (i < hiddenLayersSize.length - 1) next = hiddenLayersSize[i + 1];
 
             layers[i + 1] = new Matrix(next, current, true);
-            biases[i + 1] = new Matrix(next, 1, true);
+            biases[i + 1] = new Matrix(next, 1, false);
         }
     }
 
-    private static double sigmoid(double x) {
-        return 1 / (1 + Math.exp(-x));
+    public NeuralNetwork(int inputSize, int outputSize, int... hiddenLayersSize) {
+        this(new TanH(), inputSize, outputSize, hiddenLayersSize);
     }
 
-    private static double dSigmoid(double x) {
-        return (x) * (1 - (x));
+    private static double softMax(double cur, double sum) {
+        return cur / sum;
     }
-
-    private static double ReLU(double x) {
-        return Math.max(0, x);
-    }
-
-    private static double dReLU(double x) {
-        return x >= 0 ? 1 : 0;
-    }
-
 
     private static Matrix matrixFromArray(double[] input) {
         Matrix matrix = new Matrix(new double[][]{input}, false);
@@ -71,6 +69,15 @@ public class NeuralNetwork implements Serializable {
         }
     }
 
+    private static void softMax(Matrix inputMatrix) {
+        double sum = Arrays.stream(inputMatrix.getMatrix()[0]).map(Math::exp).sum();
+        inputMatrix.map(i -> softMax(Math.exp(i), sum));
+    }
+
+    public void isOutputSoftmax(boolean flag) {
+        softmax = flag;
+    }
+
     public double getLearningRate() {
         return learningRate;
     }
@@ -87,10 +94,12 @@ public class NeuralNetwork implements Serializable {
         for (int i = 0; i < layers.length; i++) {
             inputMatrix = Matrix.multiply(layers[i], inputMatrix);
             inputMatrix.add(biases[i]);
-            inputMatrix.map(NeuralNetwork::sigmoid);
+            inputMatrix.map(activation::function);
         }
-
         inputMatrix.transpose();
+        
+        if (softmax) softMax(inputMatrix);
+
         return inputMatrix.getMatrix()[0];
     }
 
@@ -104,7 +113,7 @@ public class NeuralNetwork implements Serializable {
         for (int i = 0; i < layers.length; i++) {
             inputMatrix = Matrix.multiply(layers[i], inputMatrix);
             inputMatrix.add(biases[i]);
-            inputMatrix.map(NeuralNetwork::sigmoid);
+            inputMatrix.map(activation::function);
 
             outputs[i] = inputMatrix;
         }
@@ -136,7 +145,7 @@ public class NeuralNetwork implements Serializable {
             newError.multiply(errorMatrix);
 
             Matrix weightDelta = outputs[i].clone();
-            weightDelta.map(NeuralNetwork::dSigmoid);
+            weightDelta.map(activation::derivative);
             weightDelta.commutativeProduct(errorMatrix);
             weightDelta.multiply(learningRate);
 

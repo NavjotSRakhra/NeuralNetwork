@@ -176,6 +176,6 @@ public class Matrix implements Cloneable, Serializable {
     private void randomizeValues() {
         Random random = new Random();
 
-        IntStream.range(0, matrix.length).parallel().forEach(i -> IntStream.range(0, matrix[0].length).parallel().forEach(j -> matrix[i][j] = (random.nextDouble())));
+        IntStream.range(0, matrix.length).parallel().forEach(i -> IntStream.range(0, matrix[0].length).parallel().forEach(j -> matrix[i][j] = (random.nextDouble() * 2) - 1));
     }
 }
