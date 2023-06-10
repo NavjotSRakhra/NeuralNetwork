@@ -1,5 +1,10 @@
 # Neural Network
 
+* [Introduction](#introduction)
+* [Project setup](#project-setup)
+* [UML](#uml)
+* [LICENSE](#license)
+
 ## Introduction
 
 I made my own version of neural network based on the videos of "The Coding Train."
