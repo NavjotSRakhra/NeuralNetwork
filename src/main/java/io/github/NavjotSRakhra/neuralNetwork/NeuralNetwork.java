@@ -1,12 +1,16 @@
 package io.github.NavjotSRakhra.neuralNetwork;
 
-import io.github.NavjotSRakhra.matrix.Matrix;
 import io.github.NavjotSRakhra.neuralNetwork.activation.Activation;
 import io.github.NavjotSRakhra.neuralNetwork.activation.TanH;
+import io.github.NavjotSRakhra.neuralNetwork.matrix.Matrix;
 
 import java.io.*;
 import java.util.Arrays;
 
+/**
+ * A simple implementation of Neural network that can be used for basic AI.
+ * It can have n hidden layers and custom activation functions.
+ */
 public class NeuralNetwork implements Serializable {
     private final int inputSize, outputSize, hiddenLayersSize[];
     private final Matrix[] layers, biases;
@@ -14,6 +18,14 @@ public class NeuralNetwork implements Serializable {
     private double learningRate;
     private boolean softmax;
 
+    /**
+     * Creates a NeuralNetwork object with default learning rate 0.1.
+     *
+     * @param activationFunction the function that is used on output after each feedforward step
+     * @param inputSize          the size of array that will be input
+     * @param outputSize         the size of array that should be output, and trained upon
+     * @param hiddenLayersSize   the number and size of hidden layers, as provided by the user.
+     */
     public NeuralNetwork(Activation activationFunction, int inputSize, int outputSize, int... hiddenLayersSize) {
         this.learningRate = 0.1d;
         this.inputSize = inputSize;
@@ -42,6 +54,13 @@ public class NeuralNetwork implements Serializable {
         }
     }
 
+    /**
+     * Creates a NeuralNetwork object with default activation function: {@link TanH} and default learning rate 0.1.
+     *
+     * @param inputSize        the size of array that will be input
+     * @param outputSize       the size of array that should be output, and trained upon
+     * @param hiddenLayersSize the number and size of hidden layers, as provided by the user.
+     */
     public NeuralNetwork(int inputSize, int outputSize, int... hiddenLayersSize) {
         this(new TanH(), inputSize, outputSize, hiddenLayersSize);
     }
@@ -56,6 +75,12 @@ public class NeuralNetwork implements Serializable {
         return matrix;
     }
 
+    /**
+     * This function is used to read the saved NeuralNetwork object from a file.
+     *
+     * @param pathToFile the path to along with the filename in which the NeuralNetworkObject was saved.
+     * @return NeuralNetwork object read from the file
+     */
     public static NeuralNetwork readFrom(String pathToFile) {
         try (FileInputStream inputStream = new FileInputStream(pathToFile)) {
             ObjectInputStream in = new ObjectInputStream(inputStream);
@@ -74,18 +99,39 @@ public class NeuralNetwork implements Serializable {
         inputMatrix.map(i -> softMax(Math.exp(i), sum));
     }
 
+    /**
+     * Can be used to tun on or of mapping of softmax function at the end of output layers
+     *
+     * @param flag True or False based on if you want the output to be softmax-ed or not.
+     */
     public void isOutputSoftmax(boolean flag) {
         softmax = flag;
     }
 
+    /**
+     * Getter for learning rate
+     *
+     * @return learning rate of the neural network
+     */
     public double getLearningRate() {
         return learningRate;
     }
 
+    /**
+     * Setter for learning rate
+     *
+     * @param learningRate the learning rate to be set to the neural network
+     */
     public void setLearningRate(double learningRate) {
         this.learningRate = learningRate;
     }
 
+    /**
+     * This method takes in input and gives the output after applying feedforward from one layer to another upto the output layer
+     *
+     * @param input the input array of size as specified in the constructor
+     * @return out put array of size as specified in the constructor
+     */
     public double[] feedForward(double[] input) {
         if (input.length != inputSize)
             throw new IllegalArgumentException("Input size " + input.length + " not equal to the input size defined: " + inputSize);
@@ -97,7 +143,7 @@ public class NeuralNetwork implements Serializable {
             inputMatrix.map(activation::function);
         }
         inputMatrix.transpose();
-        
+
         if (softmax) softMax(inputMatrix);
 
         return inputMatrix.getMatrix()[0];
@@ -120,6 +166,12 @@ public class NeuralNetwork implements Serializable {
         return outputs;
     }
 
+    /**
+     * This function is used to train the neural network based on the given inputs and given target.
+     *
+     * @param input  the input array (Size same as the one given in constructor)
+     * @param target the expected output array (Size same as the one given in constructor)
+     */
     public void train(double[] input, double[] target) {
         if (input.length != inputSize)
             throw new IllegalArgumentException("Input size " + input.length + " not equal to the input size defined: " + inputSize);
@@ -161,6 +213,11 @@ public class NeuralNetwork implements Serializable {
         }
     }
 
+    /**
+     * Write the object into file at the given file path. Preferred file extension is .nnn
+     *
+     * @param pathToFile The path along with the name of the file in which the object is to be saved
+     */
     public void writeTo(String pathToFile) {
         try (FileOutputStream outputStream = new FileOutputStream(pathToFile)) {
             ObjectOutputStream os = new ObjectOutputStream(outputStream);

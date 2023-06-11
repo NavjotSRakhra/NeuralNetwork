@@ -1,5 +1,6 @@
 package io.github.NavjotSRakhra.matrix;
 
+import io.github.NavjotSRakhra.neuralNetwork.matrix.Matrix;
 import junit.framework.TestCase;
 
 import java.util.Arrays;

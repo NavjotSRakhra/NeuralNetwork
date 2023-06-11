@@ -1,6 +1,11 @@
 package io.github.NavjotSRakhra.neuralNetwork.activation;
 
-public class ReLU implements Activation {
+import java.io.Serializable;
+
+/**
+ * Rectified Linear Unit activation function
+ */
+public class ReLU implements Activation, Serializable {
     @Override
     public double function(double x) {
         return Math.max(0, x);

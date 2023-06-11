@@ -1,4 +1,4 @@
-package io.github.NavjotSRakhra.matrix;
+package io.github.NavjotSRakhra.neuralNetwork.matrix;
 
 @FunctionalInterface
 public interface MatrixMapper {

@@ -3,6 +3,7 @@ package io.github.NavjotSRakhra.neuralNetwork;
 import io.github.NavjotSRakhra.progressPrinter.ProgressPrinter;
 import junit.framework.TestCase;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
@@ -51,5 +52,11 @@ public class NeuralNetworkTest extends TestCase {
             if (datum[1][maxInd] == 1) correct++;
         }
         assertEquals(data.length, correct);
+    }
+
+    public void testWriteTo() {
+        NeuralNetwork neuralNetwork = new NeuralNetwork(1, 1, 1);
+        neuralNetwork.writeTo("Test");
+        new File("Test").delete();
     }
 }
