@@ -1,11 +1,18 @@
 # Neural Network
 
 [![Maven Central](https://img.shields.io/maven-central/v/io.github.NavjotSRakhra/NeuralNetwork.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22io.github.NavjotSRakhra%22%20AND%20a:%22NeuralNetwork%22)
+[![javadoc](https://javadoc.io/badge2/io.github.NavjotSRakhra/NeuralNetwork/javadoc.svg)](https://javadoc.io/doc/io.github.NavjotSRakhra/NeuralNetwork)
 
-* [Introduction](#introduction)
-* [Project setup](#project-setup)
-* [UML](#uml)
-* [LICENSE](#license)
+<!-- TOC -->
+
+* [Neural Network](#neural-network)
+    * [Introduction](#introduction)
+    * [Project setup](#project-setup)
+    * [UML](#uml)
+    * [Documentation](#documentation)
+    * [LICENSE](#license)
+
+<!-- TOC -->
 
 ## Introduction
 
@@ -35,6 +42,10 @@ To install the project into your maven repository,
 ## UML
 
 <img height="2114" src=".\resources\UML.png" width="2002"/>
+
+## Documentation
+
+[Javadocs](https://javadoc.io/doc/io.github.NavjotSRakhra/NeuralNetwork)
 
 ## LICENSE
 
