@@ -1,5 +1,7 @@
 # Neural Network
 
+[![Maven Central](https://img.shields.io/maven-central/v/io.github.NavjotSRakhra/NeuralNetwork.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22io.github.NavjotSRakhra%22%20AND%20a:%22NeuralNetwork%22)
+
 * [Introduction](#introduction)
 * [Project setup](#project-setup)
 * [UML](#uml)
@@ -22,7 +24,7 @@ To install the project into your maven repository,
 - Or copy the following dependency into `pom.xml`
 
 ```xml
-g
+
 <dependency>
     <groupId>io.github.NavjotSRakhra</groupId>
     <artifactId>NeuralNetwork</artifactId>
