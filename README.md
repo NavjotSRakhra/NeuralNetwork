@@ -15,8 +15,20 @@ provided in io.github.NavjotSRakhra.neuralnetwork.activation package.
 
 ## Project setup
 
-This project is made using OpenJDK 20. To install the project into your maven repository,
-execute `mvn clean install` in `.\NeuralNetwork\`.
+This project is made using OpenJDK 11. It should work in Java 11+.
+To install the project into your maven repository,
+
+- Execute `mvn clean install` in `.\NeuralNetwork\`.
+- Or copy the following dependency into `pom.xml`
+
+```xml
+g
+<dependency>
+    <groupId>io.github.NavjotSRakhra</groupId>
+    <artifactId>NeuralNetwork</artifactId>
+    <version>1.0.2</version>
+</dependency>
+```
 
 ## UML
 
